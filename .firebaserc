@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "centre-auto-aa384": {
+      "hosting": {
+        "pk2-angular": [
+          "centre-auto-aa384"
+        ]
+      }
+    }
+  }
+}

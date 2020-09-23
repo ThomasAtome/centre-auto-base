@@ -1,0 +1,98 @@
+<form [formGroup]="signUpForm" (ngSubmit)="onSubmitSignupForm()">
+
+    <div *ngIf="errorMsg" class="alert alert-danger">{{errorMsg}}</div>
+
+    <label>Prénom</label>
+
+    <div class="alert alert-danger"
+         *ngIf="(signUpForm.controls.firstName.dirty || signUpForm.controls.firstName.touched)
+                && signUpForm.controls.firstName.invalid
+                && signUpForm.controls.firstName.errors.required">
+        Le prénom est obligatoire.
+    </div>
+
+    <div class="input-group form-group-no-border">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="nc-icon nc-alert-circle-i"></i></span>
+        </div>
+
+        <input type="text"
+               class="form-control"
+               placeholder="Prénom*"
+               formControlName="firstName"
+               [(ngModel)]="user.firstName">
+    </div>
+
+    <label>Nom</label>
+
+    <div class="alert alert-danger"
+         *ngIf="(signUpForm.controls.lastName.dirty || signUpForm.controls.lastName.touched)
+                && signUpForm.controls.lastName.invalid
+                && signUpForm.controls.lastName.errors.required">
+        Le nom est obligatoire.
+    </div>
+
+    <div class="input-group form-group-no-border">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="nc-icon nc-alert-circle-i"></i></span>
+        </div>
+
+        <input type="text"
+               class="form-control"
+               placeholder="Nom*"
+               formControlName="lastName"
+               [(ngModel)]="user.lastName">
+    </div>
+
+    <label>Email</label>
+
+    <div class="alert alert-danger"
+         *ngIf="(signUpForm.controls.email.dirty || signUpForm.controls.email.touched)
+                && signUpForm.controls.email.invalid
+                && signUpForm.controls.email.errors.required">
+        L'email est obligatoire.
+    </div>
+
+    <div class="input-group form-group-no-border">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="nc-icon nc-email-85"></i></span>
+        </div>
+
+        <input type="text"
+               class="form-control"
+               placeholder="Email*"
+               formControlName="email"
+               [(ngModel)]="user.email">
+    </div>
+
+    <label>Mot de passe</label>
+
+    <div class="alert alert-danger"
+         *ngIf="(signUpForm.controls.password.dirty || signUpForm.controls.password.touched)
+                && signUpForm.controls.password.invalid
+                && signUpForm.controls.password.errors.required">
+        Le mot de passe est obligatoire.
+    </div>
+
+    <div class="input-group form-group-no-border">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="nc-icon nc-key-25"></i></span>
+        </div>
+
+
+        <input type="password"
+               class="form-control"
+               placeholder="Mot de passe*"
+               formControlName="password"
+               [(ngModel)]="user.password">
+    </div>
+
+    <button class="btn btn-danger btn-block btn-round"
+            [disabled]="signUpForm.invalid">Inscription
+    </button>
+
+</form>
+
+<div class="forgot">
+    <a routerLink="/signin" class="btn btn-link btn-danger">Retour</a>
+</div>

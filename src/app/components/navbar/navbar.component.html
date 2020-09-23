@@ -10,8 +10,11 @@
         </div>
         <div class="navbar-collapse" id="navbarToggler">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item" *ngIf="isAnonymous()">
+                <li class="nav-item" *ngIf="isAnonymous">
                     <a routerLink="signin" class="nav-link"><i class="nc-icon nc-single-02"></i> Connexion</a>
+                </li>
+                <li class="nav-item" *ngIf="!isAnonymous">
+                    <a (click)="onClickLogout()" class="nav-link" style="cursor: pointer"><i class="nc-icon nc-button-power"></i> Déconnexion</a>
                 </li>
             </ul>
         </div>

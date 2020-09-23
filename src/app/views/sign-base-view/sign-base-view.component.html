@@ -1,0 +1,18 @@
+<div class="wrapper">
+    <div class="page-header" style="background-image: url('./assets/img/sign.jpg');">
+        <div class="filter"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-sm-6 mr-auto ml-auto">
+                    <div class="card card-register">
+                        <h2 class="title">{{title}}</h2>
+
+                        <app-signin-form *ngIf="type === 'signin'"></app-signin-form>
+                        <app-signup-form *ngIf="type === 'signup'"></app-signup-form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

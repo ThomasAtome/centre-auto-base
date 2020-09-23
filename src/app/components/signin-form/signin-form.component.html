@@ -1,0 +1,56 @@
+<form [formGroup]="signinForm" (ngSubmit)="onSubmitSigninForm()">
+
+    <div *ngIf="errorMsg" class="alert alert-danger">{{errorMsg}}</div>
+
+    <label>Email</label>
+
+    <div class="alert alert-danger"
+            *ngIf="(signinForm.controls.email.dirty || signinForm.controls.email.touched)
+                && signinForm.controls.email.invalid
+                && signinForm.controls.email.errors.required">
+            L'email est obligatoire.
+    </div>
+
+    <div class="input-group form-group-no-border">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="nc-icon nc-email-85"></i></span>
+        </div>
+
+        <input type="text"
+               class="form-control"
+               placeholder="Email*"
+               formControlName="email"
+               [(ngModel)]="email">
+    </div>
+
+    <label>Mot de passe</label>
+
+    <div class="alert alert-danger"
+         *ngIf="(signinForm.controls.password.dirty || signinForm.controls.password.touched)
+                && signinForm.controls.password.invalid
+                && signinForm.controls.password.errors.required">
+        Le mot de passe est obligatoire.
+    </div>
+
+    <div class="input-group form-group-no-border">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="nc-icon nc-key-25"></i></span>
+        </div>
+
+
+        <input type="password"
+               class="form-control"
+               placeholder="Mot de passe*"
+               formControlName="password"
+               [(ngModel)]="password">
+    </div>
+
+    <button class="btn btn-danger btn-block btn-round"
+            [disabled]="signinForm.invalid">Connexion
+    </button>
+
+</form>
+
+<div class="forgot">
+    <a routerLink="/signup" class="btn btn-link btn-danger">Pas encore inscrit ?</a>
+</div>
