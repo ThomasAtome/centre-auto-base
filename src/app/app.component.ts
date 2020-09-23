@@ -1,9 +1,8 @@
-import {Component, OnInit, Inject, Renderer2, ElementRef, ViewChild} from '@angular/core';
-import {Router, NavigationEnd} from '@angular/router';
+import {Component, ElementRef, Inject, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {NavigationEnd, Router} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 import 'rxjs/add/operator/filter';
-import {DOCUMENT} from '@angular/common';
-import {Location} from '@angular/common';
+import {DOCUMENT, Location} from '@angular/common';
 import {NavbarComponent} from './components/navbar/navbar.component';
 
 @Component({

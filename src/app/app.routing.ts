@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule,} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
-import {Routes, RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 
 import {HomeViewComponent} from "./views/home-view/home-view.component";
 import {SignBaseViewComponent} from "./views/sign-base-view/sign-base-view.component";

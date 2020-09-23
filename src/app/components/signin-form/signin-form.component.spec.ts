@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SigninFormComponent } from './signin-form.component';
+import {SigninFormComponent} from './signin-form.component';
 
 describe('SigninFormComponent', () => {
   let component: SigninFormComponent;
