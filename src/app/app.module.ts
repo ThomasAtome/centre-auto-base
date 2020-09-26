@@ -24,6 +24,11 @@ import {AuthService} from "./services/auth/auth.service";
 import * as firebase from "firebase";
 import {DashboardViewComponent} from './views/dashboard-view/dashboard-view.component';
 import {AngularFireAuthGuard} from "@angular/fire/auth-guard";
+import { BrandsViewComponent } from './views/brands-view/brands-view.component';
+import { BrandCreatorViewComponent } from './views/brand-creator-view/brand-creator-view.component';
+import { BrandEditorViewComponent } from './views/brand-editor-view/brand-editor-view.component';
+import {BrandService} from "./services/brand/brand.service";
+import { ModalConfirmDeleteComponent } from './components/modal-confirm-delete/modal-confirm-delete.component';
 
 firebase.initializeApp(environment.firebaseConfig);
 
@@ -36,7 +41,11 @@ firebase.initializeApp(environment.firebaseConfig);
         SignBaseViewComponent,
         SigninFormComponent,
         SignupFormComponent,
-        DashboardViewComponent
+        DashboardViewComponent,
+        BrandsViewComponent,
+        BrandCreatorViewComponent,
+        BrandEditorViewComponent,
+        ModalConfirmDeleteComponent
     ],
     imports: [
         BrowserModule,
@@ -54,6 +63,7 @@ firebase.initializeApp(environment.firebaseConfig);
     ],
     providers: [
         AuthService,
+        BrandService,
         AngularFireAuthGuard
     ],
     bootstrap: [AppComponent]

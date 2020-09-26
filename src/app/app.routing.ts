@@ -7,6 +7,9 @@ import {HomeViewComponent} from "./views/home-view/home-view.component";
 import {SignBaseViewComponent} from "./views/sign-base-view/sign-base-view.component";
 import {DashboardViewComponent} from "./views/dashboard-view/dashboard-view.component";
 import {AngularFireAuthGuard, redirectLoggedInTo, redirectUnauthorizedTo} from "@angular/fire/auth-guard";
+import {BrandsViewComponent} from "./views/brands-view/brands-view.component";
+import {BrandCreatorViewComponent} from "./views/brand-creator-view/brand-creator-view.component";
+import {BrandEditorViewComponent} from "./views/brand-editor-view/brand-editor-view.component";
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['signin']);
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['dashboard']);
@@ -27,6 +30,24 @@ const routes: Routes = [
     {
         path: 'dashboard',
         component: DashboardViewComponent,
+        canActivate: [AngularFireAuthGuard],
+        data: {authGuardPipe: redirectUnauthorizedToLogin}
+    },
+    {
+        path: 'brands',
+        component: BrandsViewComponent,
+        canActivate: [AngularFireAuthGuard],
+        data: {authGuardPipe: redirectUnauthorizedToLogin}
+    },
+    {
+        path: 'brand/new',
+        component: BrandCreatorViewComponent,
+        canActivate: [AngularFireAuthGuard],
+        data: {authGuardPipe: redirectUnauthorizedToLogin}
+    },
+    {
+        path: 'brand/edit/:id',
+        component: BrandEditorViewComponent,
         canActivate: [AngularFireAuthGuard],
         data: {authGuardPipe: redirectUnauthorizedToLogin}
     },

@@ -1,0 +1,46 @@
+<div class="wrapper">
+    <div class="section">
+
+        <ngb-alert *ngIf="alert.isVisible"
+                   class="text-center"
+                   [type]="alert.type">
+            {{alert.message}}
+        </ngb-alert>
+
+        <div class="container text-center">
+
+            <h4 class="title">ADMINISTRATION DES MARQUES</h4>
+
+            <div class="row">
+                <div class="col-8 ml-auto mr-auto text-center">
+
+                    <a routerLink="/brand/new" class="btn btn-round btn-outline-success btn-sm float-right mb-2">
+                        NOUVELLE MARQUE
+                    </a>
+
+                    <table class="table table-borderless table-hover">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th style="width: 50%" scope="col">Nom</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let brand of brands">
+                            <td>{{brand.name}}</td>
+                            <td>
+                                <a routerLink="/brand/edit/{{brand.id}}"
+                                   class="btn btn-round btn-outline-warning btn-sm">MODIFIER</a>
+                                <button (click)="onClickDeleteBrand(brand.id)" class="btn btn-round btn-danger btn-sm">
+                                    SUPPRIMER
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

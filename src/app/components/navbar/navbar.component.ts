@@ -2,6 +2,7 @@ import {Component, ElementRef, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
 import {AuthService} from "../../services/auth/auth.service";
 import {Router} from "@angular/router";
+import {Location} from "@angular/common";
 
 @Component({
     selector: 'app-navbar',
@@ -16,7 +17,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     isAnonymous: boolean = true;
 
     constructor(private element: ElementRef, private authService: AuthService,
-                private router: Router) {
+                private router: Router, private location: Location) {
         this.sidebarVisible = false;
     }
 
@@ -65,6 +66,18 @@ export class NavbarComponent implements OnInit, OnDestroy {
     onClickLogout() {
         this.authService.logout()
             .then(() => this.router.navigate(['']))
+    }
+
+    /**
+     * Add some class if we are on some page or not
+     */
+    getTypeHeader() {
+        const path = this.location.prepareExternalUrl(this.location.path()).slice(1).split('/')[1];
+
+        if (['brands', 'brand'].includes(path)) {
+            return 'bg-dark';
+        }
+        return 'navbar-transparent';
     }
 
     ngOnDestroy() {
