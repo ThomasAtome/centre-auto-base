@@ -1,0 +1,56 @@
+<div class="wrapper">
+    <div class="section">
+
+        <ngb-alert *ngIf="alert.isVisible"
+                   class="text-center"
+                   [type]="alert.type">
+            {{alert.message}}
+        </ngb-alert>
+
+        <div class="container text-center">
+
+            <h4 class="title">ADMINISTRATION DES MODÈLES</h4>
+
+            <div class="row">
+                <div class="col-8 ml-auto mr-auto text-center">
+
+                    <div ngbDropdown class="d-inline-block float-left">
+                        <button class="btn btn-sm btn-outline-default" id="filterByBrand" ngbDropdownToggle>Trier par marque</button>
+                        <div ngbDropdownMenu aria-labelledby="filterByBrand">
+                            <button ngbDropdownItem (click)="onClickFilterByBrand('all')">Toutes</button>
+                            <button ngbDropdownItem *ngFor="let brand of brands" (click)="onClickFilterByBrand(brand.id)">{{brand.name}}</button>
+                        </div>
+                    </div>
+
+                    <a routerLink="/model/new" class="btn btn-round btn-outline-success btn-sm float-right mb-2">
+                        NOUVEAU MODÈLE
+                    </a>
+
+                    <table class="table table-borderless table-hover">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th style="width: 30%" scope="col">Marque</th>
+                            <th style="width: 30%" scope="col">Nom</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let model of modelsShowable">
+                            <td>{{getBrandName(model.brandId)}}</td>
+                            <td>{{model.name}}</td>
+                            <td>
+                                <a routerLink="/model/edit/{{model.id}}"
+                                   class="btn btn-round btn-outline-warning btn-sm">MODIFIER</a>
+                                <button (click)="onClickDeleteModel(model.id)" class="btn btn-round btn-danger btn-sm">
+                                    SUPPRIMER
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

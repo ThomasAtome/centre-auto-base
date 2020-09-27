@@ -1,0 +1,71 @@
+<div class="wrapper">
+    <div class="section">
+        <div class="container text-center">
+
+            <h4 class="title">MODIFICATION D'UN MODÈLE</h4>
+
+            <div class="row">
+                <div class="col-md-6 ml-auto mr-auto text-center">
+
+                    <form class="mt-5" [formGroup]="editModelForm" (ngSubmit)="onSubmitEditedModelForm()">
+
+                        <div *ngIf="errorMsg" class="alert alert-danger">{{errorMsg}}</div>
+
+                        <label>Nom</label>
+
+                        <div class="alert alert-danger"
+                             *ngIf="(editModelForm.controls.name.dirty || editModelForm.controls.name.touched)
+                && editModelForm.controls.name.invalid
+                && editModelForm.controls.name.errors.required">
+                            Le nom est obligatoire.
+                        </div>
+
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="nc-icon nc-alert-circle-i"></i></span>
+                            </div>
+
+                            <input type="text"
+                                   class="form-control"
+                                   placeholder="Nom*"
+                                   formControlName="name"
+                                   [(ngModel)]="model.name">
+                        </div>
+
+                        <label>Marque</label>
+
+                        <div class="alert alert-danger"
+                             *ngIf="(editModelForm.controls.brandId.dirty || editModelForm.controls.brandId.touched)
+                && editModelForm.controls.brandId.invalid
+                && editModelForm.controls.brandId.errors.required">
+                            Vous devez sélectionner une marque.
+                        </div>
+
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="nc-icon nc-alert-circle-i"></i></span>
+                            </div>
+
+                            <select class="form-control"
+                                    formControlName="brandId"
+                                    [(ngModel)]="model.brandId">
+                                <option *ngFor="let brand of brands" [value]="brand.id">{{brand.name}}
+                                </option>
+                            </select>
+                        </div>
+
+                        <button class="btn btn-danger btn-block btn-round mt-4"
+                                [disabled]="editModelForm.invalid">Modifier
+                        </button>
+
+                    </form>
+
+                    <div class="forgot mt-3">
+                        <a routerLink="/models" class="btn btn-link btn-danger">Revenir aux modèles ?</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

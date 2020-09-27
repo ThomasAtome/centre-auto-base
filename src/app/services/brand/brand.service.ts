@@ -62,7 +62,6 @@ export class BrandService {
                     )
                     .subscribe((brand:Brand) => res(brand));
 
-
             }
         )
 
@@ -116,13 +115,21 @@ export class BrandService {
         return new Promise(
             (res, rej) => {
 
+                // Before delete the brand we have to delete all the models associated
                 this.afs
-                    .collection('brands')
-                    .doc(brandId)
-                    .delete()
-                    .then(res)
-                    .catch((err) => rej(err));
+                    .collection('models', ref => ref.where('brandId', '==', brandId))
+                    .get()
+                    .subscribe(models => {
+                        models.forEach(model => model.ref.delete());
 
+                        // Then delete the brand
+                        this.afs
+                            .collection('brands')
+                            .doc(brandId)
+                            .delete()
+                            .then(res)
+                            .catch((err) => rej(err));
+                    });
             }
         )
     }

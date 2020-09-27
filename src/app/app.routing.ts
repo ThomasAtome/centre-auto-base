@@ -10,6 +10,9 @@ import {AngularFireAuthGuard, redirectLoggedInTo, redirectUnauthorizedTo} from "
 import {BrandsViewComponent} from "./views/brands-view/brands-view.component";
 import {BrandCreatorViewComponent} from "./views/brand-creator-view/brand-creator-view.component";
 import {BrandEditorViewComponent} from "./views/brand-editor-view/brand-editor-view.component";
+import {ModelsViewComponent} from "./views/models-view/models-view.component";
+import {ModelCreatorViewComponent} from "./views/model-creator-view/model-creator-view.component";
+import {ModelEditorViewComponent} from "./views/model-editor-view/model-editor-view.component";
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['signin']);
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['dashboard']);
@@ -48,6 +51,24 @@ const routes: Routes = [
     {
         path: 'brand/edit/:id',
         component: BrandEditorViewComponent,
+        canActivate: [AngularFireAuthGuard],
+        data: {authGuardPipe: redirectUnauthorizedToLogin}
+    },
+    {
+        path: 'models',
+        component: ModelsViewComponent,
+        canActivate: [AngularFireAuthGuard],
+        data: {authGuardPipe: redirectUnauthorizedToLogin}
+    },
+    {
+        path: 'model/new',
+        component: ModelCreatorViewComponent,
+        canActivate: [AngularFireAuthGuard],
+        data: {authGuardPipe: redirectUnauthorizedToLogin}
+    },
+    {
+        path: 'model/edit/:id',
+        component: ModelEditorViewComponent,
         canActivate: [AngularFireAuthGuard],
         data: {authGuardPipe: redirectUnauthorizedToLogin}
     },

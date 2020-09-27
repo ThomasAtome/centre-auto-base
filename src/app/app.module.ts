@@ -29,6 +29,10 @@ import { BrandCreatorViewComponent } from './views/brand-creator-view/brand-crea
 import { BrandEditorViewComponent } from './views/brand-editor-view/brand-editor-view.component';
 import {BrandService} from "./services/brand/brand.service";
 import { ModalConfirmDeleteComponent } from './components/modal-confirm-delete/modal-confirm-delete.component';
+import { ModelsViewComponent } from './views/models-view/models-view.component';
+import { ModelCreatorViewComponent } from './views/model-creator-view/model-creator-view.component';
+import { ModelEditorViewComponent } from './views/model-editor-view/model-editor-view.component';
+import {ModelService} from "./services/model/model.service";
 
 firebase.initializeApp(environment.firebaseConfig);
 
@@ -45,7 +49,10 @@ firebase.initializeApp(environment.firebaseConfig);
         BrandsViewComponent,
         BrandCreatorViewComponent,
         BrandEditorViewComponent,
-        ModalConfirmDeleteComponent
+        ModalConfirmDeleteComponent,
+        ModelsViewComponent,
+        ModelCreatorViewComponent,
+        ModelEditorViewComponent
     ],
     imports: [
         BrowserModule,
@@ -64,6 +71,7 @@ firebase.initializeApp(environment.firebaseConfig);
     providers: [
         AuthService,
         BrandService,
+        ModelService,
         AngularFireAuthGuard
     ],
     bootstrap: [AppComponent]
