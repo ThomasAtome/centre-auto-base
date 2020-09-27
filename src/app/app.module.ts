@@ -24,15 +24,18 @@ import {AuthService} from "./services/auth/auth.service";
 import * as firebase from "firebase";
 import {DashboardViewComponent} from './views/dashboard-view/dashboard-view.component';
 import {AngularFireAuthGuard} from "@angular/fire/auth-guard";
-import { BrandsViewComponent } from './views/brands-view/brands-view.component';
-import { BrandCreatorViewComponent } from './views/brand-creator-view/brand-creator-view.component';
-import { BrandEditorViewComponent } from './views/brand-editor-view/brand-editor-view.component';
+import {BrandsViewComponent} from './views/brands-view/brands-view.component';
+import {BrandCreatorViewComponent} from './views/brand-creator-view/brand-creator-view.component';
+import {BrandEditorViewComponent} from './views/brand-editor-view/brand-editor-view.component';
 import {BrandService} from "./services/brand/brand.service";
-import { ModalConfirmDeleteComponent } from './components/modal-confirm-delete/modal-confirm-delete.component';
-import { ModelsViewComponent } from './views/models-view/models-view.component';
-import { ModelCreatorViewComponent } from './views/model-creator-view/model-creator-view.component';
-import { ModelEditorViewComponent } from './views/model-editor-view/model-editor-view.component';
+import {ModalConfirmDeleteComponent} from './components/modal-confirm-delete/modal-confirm-delete.component';
+import {ModelsViewComponent} from './views/models-view/models-view.component';
+import {ModelCreatorViewComponent} from './views/model-creator-view/model-creator-view.component';
+import {ModelEditorViewComponent} from './views/model-editor-view/model-editor-view.component';
 import {ModelService} from "./services/model/model.service";
+import {CarCreatorViewComponent} from './views/car-creator-view/car-creator-view.component';
+import {CarService} from "./services/car/car.service";
+import {AngularFireStorageModule} from "@angular/fire/storage";
 
 firebase.initializeApp(environment.firebaseConfig);
 
@@ -52,7 +55,8 @@ firebase.initializeApp(environment.firebaseConfig);
         ModalConfirmDeleteComponent,
         ModelsViewComponent,
         ModelCreatorViewComponent,
-        ModelEditorViewComponent
+        ModelEditorViewComponent,
+        CarCreatorViewComponent
     ],
     imports: [
         BrowserModule,
@@ -66,12 +70,14 @@ firebase.initializeApp(environment.firebaseConfig);
         JwBootstrapSwitchNg2Module,
         AngularFireModule.initializeApp(environment.firebaseConfig),
         AngularFirestoreModule,
-        AngularFireAuthModule
+        AngularFireAuthModule,
+        AngularFireStorageModule
     ],
     providers: [
         AuthService,
         BrandService,
         ModelService,
+        CarService,
         AngularFireAuthGuard
     ],
     bootstrap: [AppComponent]

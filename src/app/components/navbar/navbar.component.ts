@@ -74,7 +74,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     getTypeHeader() {
         const path = this.location.prepareExternalUrl(this.location.path()).slice(1).split('/')[1];
 
-        if (['brands', 'brand', 'models', 'model'].includes(path)) {
+        if (['brands', 'brand', 'models', 'model', 'car'].includes(path)) {
             return 'bg-dark';
         }
         return 'navbar-transparent';

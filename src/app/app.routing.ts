@@ -13,6 +13,7 @@ import {BrandEditorViewComponent} from "./views/brand-editor-view/brand-editor-v
 import {ModelsViewComponent} from "./views/models-view/models-view.component";
 import {ModelCreatorViewComponent} from "./views/model-creator-view/model-creator-view.component";
 import {ModelEditorViewComponent} from "./views/model-editor-view/model-editor-view.component";
+import {CarCreatorViewComponent} from "./views/car-creator-view/car-creator-view.component";
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['signin']);
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['dashboard']);
@@ -69,6 +70,12 @@ const routes: Routes = [
     {
         path: 'model/edit/:id',
         component: ModelEditorViewComponent,
+        canActivate: [AngularFireAuthGuard],
+        data: {authGuardPipe: redirectUnauthorizedToLogin}
+    },
+    {
+        path: 'car/new',
+        component: CarCreatorViewComponent,
         canActivate: [AngularFireAuthGuard],
         data: {authGuardPipe: redirectUnauthorizedToLogin}
     },

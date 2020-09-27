@@ -14,6 +14,9 @@
                     <a routerLink="dashboard" class="nav-link"><i class="nc-icon nc-sound-wave"></i> Dashboard</a>
                 </li>
                 <li class="nav-item" *ngIf="!isAnonymous">
+                    <a routerLink="car/new" class="nav-link"><i class="nc-icon nc-simple-add"></i> Voiture</a>
+                </li>
+                <li class="nav-item" *ngIf="!isAnonymous">
                     <a routerLink="brands" class="nav-link"><i class="nc-icon nc-settings"></i> Marques</a>
                 </li>
                 <li class="nav-item" *ngIf="!isAnonymous">
