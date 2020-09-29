@@ -2,12 +2,12 @@
     <div class="section">
         <div class="container text-center">
 
-            <h4 class="title">AJOUT D'UNE NOUVELLE VOITURE</h4>
+            <h4 class="title">MODIFICATION D'UNE VOITURE</h4>
 
             <div class="row">
                 <div class="col-md-8 ml-auto mr-auto text-center shadow">
 
-                    <form class="mt-5" [formGroup]="newCarForm" (ngSubmit)="onSubmitNewCarForm()">
+                    <form class="mt-5" [formGroup]="editCarForm" (ngSubmit)="onSubmiteditCarForm()">
 
                         <div *ngIf="errorMsg" class="alert alert-danger">{{errorMsg}}</div>
 
@@ -28,9 +28,9 @@
                                         </select>
                                     </div>
                                     <div class="form-control-feedback text-danger"
-                                         *ngIf="(newCarForm.controls.brandId.dirty || newCarForm.controls.brandId.touched)
-                                                && newCarForm.controls.brandId.invalid
-                                                && newCarForm.controls.brandId.errors.required">
+                                         *ngIf="(editCarForm.controls.brandId.dirty || editCarForm.controls.brandId.touched)
+                                                && editCarForm.controls.brandId.invalid
+                                                && editCarForm.controls.brandId.errors.required">
                                         Merci de choisir une marque.
                                     </div>
                                 </div>
@@ -45,10 +45,10 @@
                                                [(ngModel)]="car.dateFirstRelease"/>
                                     </div>
                                     <div class="form-control-feedback text-danger"
-                                         *ngIf="(newCarForm.controls.dateFirstRelease.dirty || newCarForm.controls.dateFirstRelease.touched)
-                                                && newCarForm.controls.dateFirstRelease.invalid">
-                                        <span *ngIf="newCarForm.controls.dateFirstRelease.errors.required">Vous devez renseigner une date de mise en circulation.</span>
-                                        <span *ngIf="newCarForm.controls.dateFirstRelease.errors.pattern">Vous devez respecter le format MM/AAAA.</span>
+                                         *ngIf="(editCarForm.controls.dateFirstRelease.dirty || editCarForm.controls.dateFirstRelease.touched)
+                                                && editCarForm.controls.dateFirstRelease.invalid">
+                                        <span *ngIf="editCarForm.controls.dateFirstRelease.errors.required">Vous devez renseigner une date de mise en circulation.</span>
+                                        <span *ngIf="editCarForm.controls.dateFirstRelease.errors.pattern">Vous devez respecter le format MM/AAAA.</span>
                                     </div>
                                 </div>
 
@@ -64,9 +64,9 @@
                                         </select>
                                     </div>
                                     <div class="form-control-feedback text-danger"
-                                         *ngIf="(newCarForm.controls.energyType.dirty || newCarForm.controls.energyType.touched)
-                                                && newCarForm.controls.energyType.invalid
-                                                && newCarForm.controls.energyType.errors.required">
+                                         *ngIf="(editCarForm.controls.energyType.dirty || editCarForm.controls.energyType.touched)
+                                                && editCarForm.controls.energyType.invalid
+                                                && editCarForm.controls.energyType.errors.required">
                                         Merci de choisir un type de carburant.
                                     </div>
                                 </div>
@@ -82,9 +82,9 @@
                                         </select>
                                     </div>
                                     <div class="form-control-feedback text-danger"
-                                         *ngIf="(newCarForm.controls.doorsNb.dirty || newCarForm.controls.doorsNb.touched)
-                                                && newCarForm.controls.doorsNb.invalid
-                                                && newCarForm.controls.doorsNb.errors.required">
+                                         *ngIf="(editCarForm.controls.doorsNb.dirty || editCarForm.controls.doorsNb.touched)
+                                                && editCarForm.controls.doorsNb.invalid
+                                                && editCarForm.controls.doorsNb.errors.required">
                                         Merci de choisir un nombre de portes.
                                     </div>
                                 </div>
@@ -99,9 +99,9 @@
                                                [(ngModel)]="car.horsePower"/>
                                     </div>
                                     <div class="form-control-feedback text-danger"
-                                         *ngIf="(newCarForm.controls.horsePower.dirty || newCarForm.controls.horsePower.touched)
-                                                && newCarForm.controls.horsePower.invalid
-                                                && newCarForm.controls.horsePower.errors.required">
+                                         *ngIf="(editCarForm.controls.horsePower.dirty || editCarForm.controls.horsePower.touched)
+                                                && editCarForm.controls.horsePower.invalid
+                                                && editCarForm.controls.horsePower.errors.required">
                                         Vous devez renseigner une puissance en CV.
                                     </div>
                                 </div>
@@ -125,9 +125,9 @@
                                     </div>
                                     <div class="form-control-feedback text-danger"
                                          *ngIf="this.modelsForBrandId.length !== 0
-                                                && (newCarForm.controls.modelId.dirty || newCarForm.controls.modelId.touched)
-                                                && newCarForm.controls.modelId.invalid
-                                                && newCarForm.controls.modelId.errors.required">
+                                                && (editCarForm.controls.modelId.dirty || editCarForm.controls.modelId.touched)
+                                                && editCarForm.controls.modelId.invalid
+                                                && editCarForm.controls.modelId.errors.required">
                                         Merci de choisir un modèle.
                                     </div>
                                 </div>
@@ -142,9 +142,9 @@
                                                [(ngModel)]="car.mileage"/>
                                     </div>
                                     <div class="form-control-feedback text-danger"
-                                         *ngIf="(newCarForm.controls.mileage.dirty || newCarForm.controls.mileage.touched)
-                                                && newCarForm.controls.mileage.invalid
-                                                && newCarForm.controls.mileage.errors.required">
+                                         *ngIf="(editCarForm.controls.mileage.dirty || editCarForm.controls.mileage.touched)
+                                                && editCarForm.controls.mileage.invalid
+                                                && editCarForm.controls.mileage.errors.required">
                                         Vous devez renseigner le kilométrage.
                                     </div>
                                 </div>
@@ -161,9 +161,9 @@
                                         </select>
                                     </div>
                                     <div class="form-control-feedback text-danger"
-                                         *ngIf="(newCarForm.controls.gearboxType.dirty || newCarForm.controls.gearboxType.touched)
-                                                && newCarForm.controls.gearboxType.invalid
-                                                && newCarForm.controls.gearboxType.errors.required">
+                                         *ngIf="(editCarForm.controls.gearboxType.dirty || editCarForm.controls.gearboxType.touched)
+                                                && editCarForm.controls.gearboxType.invalid
+                                                && editCarForm.controls.gearboxType.errors.required">
                                         Merci de choisir un type de boîte de vitesse.
                                     </div>
                                 </div>
@@ -179,9 +179,9 @@
                                         </select>
                                     </div>
                                     <div class="form-control-feedback text-danger"
-                                         *ngIf="(newCarForm.controls.placesNb.dirty || newCarForm.controls.placesNb.touched)
-                                                && newCarForm.controls.placesNb.invalid
-                                                && newCarForm.controls.placesNb.errors.required">
+                                         *ngIf="(editCarForm.controls.placesNb.dirty || editCarForm.controls.placesNb.touched)
+                                                && editCarForm.controls.placesNb.invalid
+                                                && editCarForm.controls.placesNb.errors.required">
                                         Merci de choisir un nombre de places.
                                     </div>
                                 </div>
@@ -196,9 +196,9 @@
                                                [(ngModel)]="car.color"/>
                                     </div>
                                     <div class="form-control-feedback text-danger"
-                                         *ngIf="(newCarForm.controls.color.dirty || newCarForm.controls.color.touched)
-                                                && newCarForm.controls.color.invalid
-                                                && newCarForm.controls.color.errors.required">
+                                         *ngIf="(editCarForm.controls.color.dirty || editCarForm.controls.color.touched)
+                                                && editCarForm.controls.color.invalid
+                                                && editCarForm.controls.color.errors.required">
                                         Vous devez renseigner une couleur.
                                     </div>
                                 </div>
@@ -206,26 +206,8 @@
                             </div>
                         </div>
 
-                        <div class="row">
-
-                            <div class="col-md-12 ml-auto mr-auto text-center">
-
-                                <div class="custom-file">
-                                    <input
-                                            type="file"
-                                            class="custom-file-input"
-                                            id="imgFile"
-                                            (change)="onFileSelected($event)"/>
-                                    <label class="custom-file-label" for="imgFile">{{ this.fileSelected ? this.fileSelected.name : 'Sélectionner une image' }}</label>
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
                         <button class="btn btn-danger btn-block btn-round mt-4"
-                                [disabled]="newCarForm.invalid || !this.fileSelected">Ajouter
+                                [disabled]="editCarForm.invalid">Modifier
                         </button>
 
                     </form>

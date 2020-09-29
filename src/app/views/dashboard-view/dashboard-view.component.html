@@ -3,9 +3,71 @@
          style="background-image: url('./assets/img/dashboard.jpg');">
         <div class="filter"></div>
     </div>
-    <div class="section profile-content">
+    <div class="section">
         <div class="container text-center">
-            <h4 class="title">DASHBOARD</h4>
+
+            <h4 class="title">GALERIE</h4>
+
+            <div class="row">
+
+                <div class="card-deck justify-content-center">
+
+                    <div *ngFor="let car of cars"
+                         class="card mb-4"
+                         style="min-width: 30rem; max-width: 30rem;">
+                        <img class="card-img-top" [src]="car.imgPath">
+                        <div class="card-body">
+                            <h5 class="card-title">{{getBrandName(car.brandId)}} {{getModelName(car.modelId)}}</h5>
+                            <div class="row">
+                                <div class="col-6 text-left">
+                                    <p class="card-text">
+                                        Type de boîte:
+                                        <small class="text-muted">
+                                            {{car.gearboxType}}
+                                        </small>
+                                    </p>
+                                    <p class="card-text">
+                                        Carburant:
+                                        <small class="text-muted">
+                                            {{car.energyType}}
+                                        </small>
+                                    </p>
+                                    <p class="card-text">
+                                        Puissance:
+                                        <small class="text-muted">
+                                            {{car.horsePower}} CV
+                                        </small>
+                                    </p>
+                                    <p class="card-text">
+                                        Mise en circu.:
+                                        <small class="text-muted">
+                                            {{car.dateFirstRelease}}
+                                        </small>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer text-right">
+                            <div class="float-left">
+                                <a  routerLink="/car/edit/{{car.id}}" class="btn btn-round btn-outline-warning btn-sm">
+                                    <i class="nc-icon nc-simple-delete"></i>
+                                </a>
+                                <button (click)="onClickDeleteCar(car.id, car.imgPath)" class="btn btn-round btn-outline-danger btn-sm btn-danger">
+                                    <i class="nc-icon nc-simple-remove"></i>
+                                </button>
+                            </div>
+                            Kilométrage:
+                            <small
+                                    class="text-muted">
+                                {{car.mileage}} {{car.mileage > 0 ? 'kms' : 'km'}}
+                            </small>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
     </div>
 </div>

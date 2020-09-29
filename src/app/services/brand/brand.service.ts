@@ -3,6 +3,8 @@ import {AngularFirestore} from "@angular/fire/firestore";
 import {Brand} from "../../models/brand.model";
 import {ReplaySubject} from "rxjs";
 import {map} from "rxjs/operators";
+import {CarService} from "../car/car.service";
+import {ModelService} from "../model/model.service";
 
 @Injectable({
     providedIn: 'root'
@@ -11,7 +13,8 @@ export class BrandService {
 
     brands: ReplaySubject<Array<Brand>>;
 
-    constructor(private afs: AngularFirestore) {
+    constructor(private afs: AngularFirestore, private carsService: CarService,
+                private modelService: ModelService) {
 
         this.brands = new ReplaySubject<Array<Brand>>();
 
@@ -60,7 +63,7 @@ export class BrandService {
                             return brand;
                         })
                     )
-                    .subscribe((brand:Brand) => res(brand));
+                    .subscribe((brand: Brand) => res(brand));
 
             }
         )
@@ -115,20 +118,20 @@ export class BrandService {
         return new Promise(
             (res, rej) => {
 
-                // Before delete the brand we have to delete all the models associated
-                this.afs
-                    .collection('models', ref => ref.where('brandId', '==', brandId))
-                    .get()
-                    .subscribe(models => {
-                        models.forEach(model => model.ref.delete());
-
-                        // Then delete the brand
-                        this.afs
-                            .collection('brands')
-                            .doc(brandId)
-                            .delete()
-                            .then(res)
-                            .catch((err) => rej(err));
+                // Before delete the brand we have to delete all the cars associated
+                this.carsService.deleteWhere('brandId', '==', brandId)
+                    .then(() => {
+                        // Then delete all the models
+                        this.modelService.deleteWhere('brandId', '==', brandId)
+                            .then(() => {
+                                // Then delete the brand
+                                this.afs
+                                    .collection('brands')
+                                    .doc(brandId)
+                                    .delete()
+                                    .then(res)
+                                    .catch((err) => rej(err));
+                            });
                     });
             }
         )

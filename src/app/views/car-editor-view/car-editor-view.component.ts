@@ -1,22 +1,20 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Car} from "../../models/car.model";
+import {Brand} from "../../models/brand.model";
+import {Model} from "../../models/model.model";
+import {Subscription} from "rxjs";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CarService} from "../../services/car/car.service";
 import {ModelService} from "../../services/model/model.service";
-import {Brand} from "../../models/brand.model";
 import {BrandService} from "../../services/brand/brand.service";
-import {Model} from "../../models/model.model";
-import {Subscription} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
-import {AngularFireStorage} from "@angular/fire/storage";
-import {finalize} from "rxjs/operators";
 
 @Component({
-    selector: 'app-car-creator-view',
-    templateUrl: './car-creator-view.component.html',
-    styleUrls: ['./car-creator-view.component.css']
+    selector: 'app-car-editor-view',
+    templateUrl: './car-editor-view.component.html',
+    styleUrls: ['./car-editor-view.component.css']
 })
-export class CarCreatorViewComponent implements OnInit, OnDestroy {
+export class CarEditorViewComponent implements OnInit {
 
     car: Car;
     brands: Array<Brand>;
@@ -26,23 +24,29 @@ export class CarCreatorViewComponent implements OnInit, OnDestroy {
     brandsSub: Subscription;
     modelsSub: Subscription;
 
-    fileSelected: any;
-
     errorMsg: string;
 
-    newCarForm: FormGroup;
+    editCarForm: FormGroup;
 
     energyTypes = ['Essence', 'Diesel', 'Hybride', 'Electrique', 'GPL', 'Autre'];
     numbers = [1, 2, 3, 4, 5];
 
     constructor(private carService: CarService, private modelService: ModelService,
                 private brandService: BrandService, private formBuilder: FormBuilder,
-                private router: Router, private afs: AngularFireStorage) {
+                private router: Router, private route: ActivatedRoute) {
         this.car = new Car();
         this.modelsForBrandId = [];
     }
 
     ngOnInit(): void {
+        const id = this.route.snapshot.params.id;
+
+        this.carService.getById(id)
+            .then((car: Car) => {
+                this.car = car;
+                this.getModelsForBrandId(car.brandId);
+            });
+
         this._initSubs();
 
         this.brandService.getAll();
@@ -70,7 +74,7 @@ export class CarCreatorViewComponent implements OnInit, OnDestroy {
      * @private
      */
     _initForm() {
-        this.newCarForm = this.formBuilder.group({
+        this.editCarForm = this.formBuilder.group({
             'brandId': ['', Validators.required],
             'modelId': ['', Validators.required],
             'dateFirstRelease': ['', [Validators.required, Validators.pattern(/^(0[1-9]|1[012])\/\d{4}$/)]],
@@ -93,51 +97,21 @@ export class CarCreatorViewComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Method for handle when the user add or remove a file on the input file
-     * @param e
-     */
-    onFileSelected(e) {
-        this.fileSelected = null;
-        if (e.target.files.length > 0) {
-            this.fileSelected = e.target.files[0];
-        }
-    }
-
-    /**
      * Method called when the user want to add a new car
      */
-    onSubmitNewCarForm() {
+    onSubmiteditCarForm() {
 
         this.errorMsg = null;
 
-        // First upload the file
-        const filename = this.fileSelected.name.split('.')[0] + '_' + new Date().getTime().toString() + '.' + this.fileSelected.name.split('.')[1];
-
-        const fileRef = this.afs.ref(filename);
-        const task = this.afs
-            .upload(filename, this.fileSelected);
-
-        task.snapshotChanges()
-            .pipe(
-                finalize(() => {
-                    fileRef.getDownloadURL().subscribe(
-                        (url) => {
-                            this.car.imgPath = url;
-
-                            this.carService.add(this.car)
-                                .then(() => {
-                                    this.router.navigate(['dashboard']);
-                                })
-                                .catch(errMsg => this.errorMsg = errMsg);
-                        }
-                    )
-                })
-            ).subscribe();
+        this.carService.edit(this.car)
+            .then(() => {
+                this.router.navigate(['dashboard']);
+            })
+            .catch(errMsg => this.errorMsg = errMsg);
     }
 
     ngOnDestroy() {
         this.brandsSub.unsubscribe();
         this.modelsSub.unsubscribe();
     }
-
 }

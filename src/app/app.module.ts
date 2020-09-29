@@ -36,6 +36,7 @@ import {ModelService} from "./services/model/model.service";
 import {CarCreatorViewComponent} from './views/car-creator-view/car-creator-view.component';
 import {CarService} from "./services/car/car.service";
 import {AngularFireStorageModule} from "@angular/fire/storage";
+import { CarEditorViewComponent } from './views/car-editor-view/car-editor-view.component';
 
 firebase.initializeApp(environment.firebaseConfig);
 
@@ -56,7 +57,8 @@ firebase.initializeApp(environment.firebaseConfig);
         ModelsViewComponent,
         ModelCreatorViewComponent,
         ModelEditorViewComponent,
-        CarCreatorViewComponent
+        CarCreatorViewComponent,
+        CarEditorViewComponent
     ],
     imports: [
         BrowserModule,

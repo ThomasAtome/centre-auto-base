@@ -3,6 +3,7 @@ import {ReplaySubject} from "rxjs";
 import {AngularFirestore} from "@angular/fire/firestore";
 import {map} from "rxjs/operators";
 import {Model} from "../../models/model.model";
+import {CarService} from "../car/car.service";
 
 @Injectable({
     providedIn: 'root'
@@ -11,7 +12,7 @@ export class ModelService {
 
     models: ReplaySubject<Array<Model>>;
 
-    constructor(private afs: AngularFirestore) {
+    constructor(private afs: AngularFirestore, private carsService: CarService) {
 
         this.models = new ReplaySubject<Array<Model>>();
 
@@ -102,7 +103,6 @@ export class ModelService {
         )
     }
 
-
     /**
      * Method for delete an existing model on the DB
      * @param modelId
@@ -111,15 +111,37 @@ export class ModelService {
         return new Promise(
             (res, rej) => {
 
-                this.afs
-                    .collection('models')
-                    .doc(modelId)
-                    .delete()
-                    .then(res)
-                    .catch((err) => rej(err));
-
+                // Before delete the model we have to delete all the cars associated
+                this.carsService.deleteWhere('modelId', '==', modelId)
+                    .then(() => {
+                        this.afs
+                            .collection('models')
+                            .doc(modelId)
+                            .delete()
+                            .then(res)
+                            .catch((err) => rej(err));
+                    })
             }
         )
+    }
+
+    /**
+     * Method for delete all the models by a where clause
+     * @param fieldPath
+     * @param opStr
+     * @param value
+     */
+    deleteWhere(fieldPath, opStr, value) {
+        return new Promise(
+            (res, rej) => {
+                this.afs
+                    .collection('models', ref => ref.where(fieldPath, opStr, value))
+                    .get()
+                    .subscribe(models => {
+                        models.forEach(model => model.ref.delete());
+                    });
+                res();
+            });
     }
 
 }
