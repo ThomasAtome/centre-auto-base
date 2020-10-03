@@ -8,7 +8,7 @@ import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 })
 export class ModalConfirmDeleteComponent implements OnInit {
 
-  constructor(private modal: NgbActiveModal) { }
+  constructor(public modal: NgbActiveModal) { }
 
   ngOnInit(): void {
   }
