@@ -49,9 +49,6 @@ export class ModelsViewComponent implements OnInit {
 
         this.modelService.getAll();
         this.brandService.getAll();
-
-        this.authService.isCurrentUserAdmin().then((isAdmin: boolean) => this.isAdmin = isAdmin);
-
     }
 
     /**
