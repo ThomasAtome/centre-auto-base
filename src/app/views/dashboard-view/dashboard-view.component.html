@@ -48,7 +48,7 @@
                             </div>
                         </div>
                         <div class="card-footer text-right">
-                            <div class="float-left">
+                            <div *ngIf="isAdmin" class="float-left">
                                 <a  routerLink="/car/edit/{{car.id}}" class="btn btn-round btn-outline-warning btn-sm">
                                     <i class="nc-icon nc-simple-delete"></i>
                                 </a>

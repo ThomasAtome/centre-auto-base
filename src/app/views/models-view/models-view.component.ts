@@ -23,7 +23,8 @@ export class ModelsViewComponent implements OnInit {
     brandsSub: Subscription;
     modelsSub: Subscription;
 
-    constructor(private modelService: ModelService, private brandService: BrandService, private modalService: NgbModal) {
+    constructor(private modelService: ModelService, private brandService: BrandService,
+                private modalService: NgbModal) {
 
         this.alert = {
             isVisible: false,
@@ -48,6 +49,8 @@ export class ModelsViewComponent implements OnInit {
 
         this.modelService.getAll();
         this.brandService.getAll();
+
+        this.authService.isCurrentUserAdmin().then((isAdmin: boolean) => this.isAdmin = isAdmin);
 
     }
 

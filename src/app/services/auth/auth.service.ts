@@ -11,9 +11,13 @@ import {AngularFireAuth} from "@angular/fire/auth";
 export class AuthService {
 
     token: BehaviorSubject<string>;
+    isAdmin: BehaviorSubject<boolean>;
+
+    currentUser;
 
     constructor(private afs: AngularFirestore, private afa: AngularFireAuth) {
         this.token = new BehaviorSubject<string>(null);
+        this.isAdmin = new BehaviorSubject<boolean>(false);
     }
 
     /**
@@ -29,6 +33,8 @@ export class AuthService {
                     .then((currentUser) => {
 
                         this.token.next(currentUser.user.refreshToken);
+                        this.currentUser = currentUser;
+                        this.isCurrentUserAdmin()
 
                         newUser.id = currentUser.user.uid;
 
@@ -77,6 +83,8 @@ export class AuthService {
                 firebase.auth().signInWithEmailAndPassword(email, password)
                     .then((currentUser) => {
                         this.token.next(currentUser.user.refreshToken);
+                        this.currentUser = currentUser;
+                        this.isCurrentUserAdmin()
                         res();
                     })
                     .catch((err) => {
@@ -115,6 +123,8 @@ export class AuthService {
                 firebase.auth().signOut()
                     .then(() => {
                         this.token.next(null);
+                        this.currentUser = null;
+                        this.isAdmin.next(false);
                         res();
                     });
             }
@@ -125,14 +135,34 @@ export class AuthService {
      * Method for retrieve the current token if exist
      */
     getToken() {
-        if(!this.token.getValue()) {
+        if (!this.token.getValue()) {
             this.afa.authState.subscribe((user) => {
-                if(user && user.uid) {
+                if (user && user.uid) {
                     this.token.next(user.refreshToken);
                     return this.token;
                 }
             });
         }
         return this.token;
+    }
+
+    /**
+     * Method for retrieve the current user and check if his email is an admin emain
+     */
+    isCurrentUserAdmin() {
+        if (this.currentUser) {
+            ['admin@admin.com'].includes(this.currentUser.email) ? this.isAdmin.next(true) : this.isAdmin.next(false);
+        } else {
+            this.afa
+                .user
+                .subscribe(user => {
+                    if (user) {
+                        this.currentUser = user;
+                        ['admin@admin.com'].includes(user.email) ? this.isAdmin.next(true) : this.isAdmin.next(false);
+                    } else {
+                        this.isAdmin.next(false);
+                    }
+                });
+        }
     }
 }

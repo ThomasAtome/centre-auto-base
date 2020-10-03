@@ -13,13 +13,13 @@
                 <li class="nav-item" *ngIf="!isAnonymous">
                     <a routerLink="dashboard" class="nav-link"><i class="nc-icon nc-sound-wave"></i> Galerie</a>
                 </li>
-                <li class="nav-item" *ngIf="!isAnonymous">
+                <li class="nav-item" *ngIf="!isAnonymous && isAdmin">
                     <a routerLink="car/new" class="nav-link"><i class="nc-icon nc-simple-add"></i> Voiture</a>
                 </li>
-                <li class="nav-item" *ngIf="!isAnonymous">
+                <li class="nav-item" *ngIf="!isAnonymous && isAdmin">
                     <a routerLink="brands" class="nav-link"><i class="nc-icon nc-settings"></i> Marques</a>
                 </li>
-                <li class="nav-item" *ngIf="!isAnonymous">
+                <li class="nav-item" *ngIf="!isAnonymous && isAdmin">
                     <a routerLink="models" class="nav-link"><i class="nc-icon nc-settings"></i> Modèles</a>
                 </li>
                 <li class="nav-item" *ngIf="isAnonymous">

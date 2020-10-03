@@ -6,80 +6,93 @@ import {Brand} from "../../models/brand.model";
 import {Model} from "../../models/model.model";
 import {BrandService} from "../../services/brand/brand.service";
 import {ModelService} from "../../services/model/model.service";
+import {AuthService} from "../../services/auth/auth.service";
 
 @Component({
-  selector: 'app-dashboard-view',
-  templateUrl: './dashboard-view.component.html',
-  styleUrls: ['./dashboard-view.component.css']
+    selector: 'app-dashboard-view',
+    templateUrl: './dashboard-view.component.html',
+    styleUrls: ['./dashboard-view.component.css']
 })
 export class DashboardViewComponent implements OnInit, OnDestroy {
 
-  cars: Array<Car>;
-  brands: Array<Brand>;
-  models: Array<Model>;
+    cars: Array<Car>;
+    brands: Array<Brand>;
+    models: Array<Model>;
 
-  carsSub: Subscription;
-  brandsSub: Subscription;
-  modelsSub: Subscription;
+    carsSub: Subscription;
+    brandsSub: Subscription;
+    modelsSub: Subscription;
+    isAdminSub: Subscription;
 
-  constructor(private carsService: CarService, private brandService: BrandService,
-              private modelService: ModelService) { }
+    isAdmin: boolean;
 
-  ngOnInit(): void {
-    this._initSubs();
+    constructor(private carsService: CarService, private brandService: BrandService,
+                private modelService: ModelService, private authService: AuthService) {
+    }
 
-    this.carsService.getAll();
-    this.brandService.getAll();
-    this.modelService.getAll();
-  }
+    ngOnInit(): void {
+        this._initSubs();
 
-  /**
-   * Retrieve the model name by his id
-   * @param modelId
-   */
-  getModelName(modelId) {
-    return this.models.find(model => model.id === modelId).name;
-  }
+        this.carsService.getAll();
+        this.brandService.getAll();
+        this.modelService.getAll();
+    }
 
-  /**
-   * Retrieve the brand name by his id
-   * @param brandId
-   */
-  getBrandName(brandId) {
-    return this.brands.find(brand => brand.id === brandId).name;
-  }
+    /**
+     * Retrieve the model name by his id
+     * @param modelId
+     */
+    getModelName(modelId) {
+        if (this.models) {
+            return this.models.find(model => model.id === modelId).name;
+        }
+    }
 
-  /**
-   * Method for initialize all the subs
-   * @private
-   */
-  _initSubs() {
-    this.carsSub = this.carsService.cars.subscribe(
-        cars => this.cars = cars
-    );
+    /**
+     * Retrieve the brand name by his id
+     * @param brandId
+     */
+    getBrandName(brandId) {
+        if (this.brands) {
+            return this.brands.find(brand => brand.id === brandId).name;
+        }
+    }
 
-    this.brandsSub = this.brandService.brands.subscribe(
-        brands => this.brands = brands
-    );
+    /**
+     * Method for initialize all the subs
+     * @private
+     */
+    _initSubs() {
+        this.carsSub = this.carsService.cars.subscribe(
+            cars => this.cars = cars
+        );
 
-    this.modelsSub = this.modelService.models.subscribe(
-        models => this.models = models
-    );
-  }
+        this.brandsSub = this.brandService.brands.subscribe(
+            brands => this.brands = brands
+        );
 
-  /**
-   * Method called when the user ask for delete a car
-   * @param carId
-   * @param carImgPath
-   */
-  onClickDeleteCar(carId, carImgPath) {
-    this.carsService.delete(carId, carImgPath)
-  }
+        this.modelsSub = this.modelService.models.subscribe(
+            models => this.models = models
+        );
 
-  ngOnDestroy() {
-    this.carsSub.unsubscribe();
-    this.brandsSub.unsubscribe();
-    this.modelsSub.unsubscribe();
-  }
+        this.isAdminSub = this.authService.isAdmin
+            .subscribe((isAdmin: boolean) => this.isAdmin = isAdmin);
+    }
+
+    /**
+     * Method called when the user ask for delete a car
+     * @param carId
+     * @param carImgPath
+     */
+    onClickDeleteCar(carId, carImgPath) {
+        this.carsService.delete(carId, carImgPath)
+    }
+
+    ngOnDestroy() {
+        this.carsSub.unsubscribe();
+        this.brandsSub.unsubscribe();
+        this.modelsSub.unsubscribe();
+        this.isAdminSub.unsubscribe();
+    }
 
 }

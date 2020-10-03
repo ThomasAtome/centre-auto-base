@@ -15,9 +15,20 @@ import {ModelCreatorViewComponent} from "./views/model-creator-view/model-creato
 import {ModelEditorViewComponent} from "./views/model-editor-view/model-editor-view.component";
 import {CarCreatorViewComponent} from "./views/car-creator-view/car-creator-view.component";
 import {CarEditorViewComponent} from "./views/car-editor-view/car-editor-view.component";
+import {map} from "rxjs/operators";
+import {AngularFireStorage} from "@angular/fire/storage";
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['signin']);
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['dashboard']);
+const redirectUnauthorizedOrNotAdminToDash = () =>
+    map((user: any) => {
+        if (!user) {
+            return ['signin'];
+        } else if (['thomacheva@gmail.com'].includes(user.email)) {
+            return true;
+        }
+        return ['dashboard'];
+    });
 
 const routes: Routes = [
     {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -48,13 +59,13 @@ const routes: Routes = [
         path: 'brand/new',
         component: BrandCreatorViewComponent,
         canActivate: [AngularFireAuthGuard],
-        data: {authGuardPipe: redirectUnauthorizedToLogin}
+        data: {authGuardPipe: redirectUnauthorizedOrNotAdminToDash}
     },
     {
         path: 'brand/edit/:id',
         component: BrandEditorViewComponent,
         canActivate: [AngularFireAuthGuard],
-        data: {authGuardPipe: redirectUnauthorizedToLogin}
+        data: {authGuardPipe: redirectUnauthorizedOrNotAdminToDash}
     },
     {
         path: 'models',
@@ -66,25 +77,25 @@ const routes: Routes = [
         path: 'model/new',
         component: ModelCreatorViewComponent,
         canActivate: [AngularFireAuthGuard],
-        data: {authGuardPipe: redirectUnauthorizedToLogin}
+        data: {authGuardPipe: redirectUnauthorizedOrNotAdminToDash}
     },
     {
         path: 'model/edit/:id',
         component: ModelEditorViewComponent,
         canActivate: [AngularFireAuthGuard],
-        data: {authGuardPipe: redirectUnauthorizedToLogin}
+        data: {authGuardPipe: redirectUnauthorizedOrNotAdminToDash}
     },
     {
         path: 'car/new',
         component: CarCreatorViewComponent,
         canActivate: [AngularFireAuthGuard],
-        data: {authGuardPipe: redirectUnauthorizedToLogin}
+        data: {authGuardPipe: redirectUnauthorizedOrNotAdminToDash}
     },
     {
         path: 'car/edit/:id',
         component: CarEditorViewComponent,
         canActivate: [AngularFireAuthGuard],
-        data: {authGuardPipe: redirectUnauthorizedToLogin}
+        data: {authGuardPipe: redirectUnauthorizedOrNotAdminToDash}
     },
 ];
 
@@ -99,4 +110,8 @@ const routes: Routes = [
     exports: [],
 })
 export class AppRoutingModule {
+
+    constructor(private afs: AngularFireStorage) {
+    }
+
 }

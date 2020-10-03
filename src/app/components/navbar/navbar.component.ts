@@ -14,7 +14,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private sidebarVisible: boolean;
 
     tokenSub: Subscription;
+    isAdminSub: Subscription;
+
     isAnonymous: boolean = true;
+    isAdmin: boolean;
 
     constructor(private element: ElementRef, private authService: AuthService,
                 private router: Router, private location: Location) {
@@ -30,6 +33,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
             .subscribe(
                 (token) => this.isAnonymous = !token
             )
+
+        this.isAdminSub = this.authService.isAdmin
+            .subscribe((isAdmin: boolean) => this.isAdmin = isAdmin);
+
+        this.authService.isCurrentUserAdmin();
     }
 
     sidebarOpen() {
@@ -64,6 +72,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
      * Method called when the user click on the disconnect link
      */
     onClickLogout() {
+        this.isAdmin = false;
         this.authService.logout()
             .then(() => this.router.navigate(['']))
     }
@@ -82,6 +91,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.tokenSub.unsubscribe();
+        this.isAdminSub.unsubscribe();
     }
 
 }
